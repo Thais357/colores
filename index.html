@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <title>Colores</title>
+</head>
+<body>
+
+<div class="mb-3">
+    <label for="color1" class="form-label">Ingrese el primer valor</label>
+    <input type="color" class="form-control" id="color1" placeholder="">
+</div>
+<div class="mb-3">
+    <label for="color2" class="form-label">Ingrese el segundo valor</label>
+    <input type="color" class="form-control form-control-color" id="color2" placeholder="">
+</div>
+<br>
+<button type="submit" class="btn btn-primary">Valor de combinacion</button>
+
+
+
+
+<div class="form-group row" style="margin-bottom: 5px;">
+   <h3>Resultado:</h3>
+    <p id="resultado"></p>
+
+    <p>Nota: Los valores mas cercanos al 0 denotan bajo nivel de combinacion entre el color 1 y 2, entre mas pegado al valor 1 mas combinan ambos colores</p>
+</div>
+
+</body>
+
+<script>
+
+    $( document ).ready(function() {
+
+        var button = document.querySelector("button");
+        button.addEventListener("click", function() {
+            var color1 = $("#color1").val();
+            var color2 = $("#color2").val();
+            datos = {"color1":color1, "color2":color2}
+            $.ajax({
+                data: datos,
+                url: "colores.php",
+                //crossDomain: true,
+                dataType: 'json',
+                method: "POST",
+            }).done(function (datos) {
+
+              $("#resultado").html("Valor de combinacion:<br><pre>" + JSON.stringify(datos.valorDeCombinacion, null, 2) + "</pre>");
+
+                ;
+                //console.log(color1);
+                //  console.log(color2);
+            });
+        })
+    });
+
+</script>
+
+</html>
